@@ -3,42 +3,42 @@
 
 :-module(_,_).
 
-esCuadradoFantasticoSecreto(Matriz, Secreto) :-
-    recorrerMatriz(Matriz, Secreto).
+esCuadradoFantasticoSecreto(Box, SecretNumber) :-
+    parseBox(Box, SecretNumber).
 
-recorrerMatriz([X | T], Secreto) :-
-    reverse(T, [Y | _]),
-    recorrerListas(X, Y, Secreto).
+parseBox([X | T], SecretNumber) :-
+    my_reverse(T, [Y | _]),
+    parseLists(X, Y, SecretNumber).
 
-recorrerListas([X | T], [Y | U], Secreto) :-
-    reverse(T, [Xs | _]),
-    reverse(U, [Ys | _]),
-    comprobarSecreto(0, [X, Y, Xs, Ys], [X, Y, Xs, Ys], Secreto).
+parseLists([X | T], [Y | U], SecretNumber) :-
+    my_reverse(T, [Xs | _]),
+    my_reverse(U, [Ys | _]),
+    getMaximumValue(0, [X, Y, Xs, Ys], [X, Y, Xs, Ys], SecretNumber).
 
-comprobarSecreto(0, [X | T], Original, Secreto) :-
-        comprobarSecreto(X, T, Original, Secreto).
-comprobarSecreto(Maximo, [X | T], Original, Secreto) :-
-    less_or_equal(Maximo, X),
-    comprobarSecreto(X, T, Original, Secreto).
-comprobarSecreto(Maximo, [X | T], Original, Secreto) :-
+getMaximumValue(0, [X | T], Original, SecretNumber) :-
+        getMaximumValue(X, T, Original, SecretNumber).
+getMaximumValue(Max, [X | T], Original, SecretNumber) :-
+    less_or_equal(Max, X),
+    getMaximumValue(X, T, Original, SecretNumber).
+getMaximumValue(Max, [X | T], Original, SecretNumber) :-
     % Comprobamos que es mayor que, por lo tanto se usa less_or_equal con los args al revés
-    less_or_equal(X, Maximo),
-    comprobarSecreto(Maximo, T, Original, Secreto).
-comprobarSecreto(Maximo, [], Original, Secreto):-
-    sumar(Maximo, Original, [], Secreto).
+    less_or_equal(X, Max),
+    getMaximumValue(Max, T, Original, SecretNumber).
+getMaximumValue(Max, [], Original, SecretNumber):-
+    getSecretNumber(Max, Original, [], SecretNumber).
 
-sumar(Maximo, [X | T], Numeros, Secreto) :-
-    Maximo = X,
-    sumar(Maximo, T, Numeros, Secreto).
-sumar(Maximo, [X | T], Numeros, Secreto) :-
+getSecretNumber(Max, [X | T], UniqueValues, SecretNumber) :-
+    Max = X,
+    getSecretNumber(Max, T, UniqueValues, SecretNumber).
+getSecretNumber(Max, [X | T], UniqueValues, SecretNumber) :-
     % condicion para que no entre en caso de que sean iguales y entre por backtracing
-    Maximo \= X,
-    append([X], Numeros, Z),
-    sumar(Maximo, T, Z, Secreto).
-sumar(Maximo, [], [X, Y], Secreto) :-
+    Max \= X,
+    append([X], UniqueValues, Z),
+    getSecretNumber(Max, T, Z, SecretNumber).
+getSecretNumber(Max, [], [X, Y], SecretNumber) :-
     peano_add(X, Y, Z),
-    Maximo = Z,
-    Secreto = Z.
+    Max = Z,
+    SecretNumber = Z.
 
 % Métodos auxiliares
 nat(0).
@@ -54,8 +54,8 @@ peano_add(0, N, N).
 peano_add( s(N), M, s(Sum) ) :-
 	peano_add( N, M, Sum ).
 
-reverse([], []).
-reverse([X | Xs], Ys) :-
+my_reverse([], []).
+my_reverse([X | Xs], Ys) :-
     reverse(Xs, Zs),
     append(Zs, [X], Ys).
 
