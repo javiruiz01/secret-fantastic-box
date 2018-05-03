@@ -21,7 +21,6 @@ getMaximumValue(Max, [X | T], Original, SecretNumber) :-
     less_or_equal(Max, X),
     getMaximumValue(X, T, Original, SecretNumber).
 getMaximumValue(Max, [X | T], Original, SecretNumber) :-
-    % Comprobamos que es mayor que, por lo tanto se usa less_or_equal con los args al revés
     less_or_equal(X, Max),
     getMaximumValue(Max, T, Original, SecretNumber).
 getMaximumValue(Max, [], Original, SecretNumber):-
@@ -31,16 +30,15 @@ getSecretNumber(Max, [X | T], UniqueValues, SecretNumber) :-
     Max = X,
     getSecretNumber(Max, T, UniqueValues, SecretNumber).
 getSecretNumber(Max, [X | T], UniqueValues, SecretNumber) :-
-    % condicion para que no entre en caso de que sean iguales y entre por backtracing
     Max \= X,
-    append([X], UniqueValues, Z),
+    my_append([X], UniqueValues, Z),
     getSecretNumber(Max, T, Z, SecretNumber).
 getSecretNumber(Max, [], [X, Y], SecretNumber) :-
     peano_add(X, Y, Z),
     Max = Z,
     SecretNumber = Z.
 
-% Métodos auxiliares
+% Methods
 nat(0).
 nat(s(X)) :-
     nat(X).
@@ -57,7 +55,14 @@ peano_add( s(N), M, s(Sum) ) :-
 my_reverse([], []).
 my_reverse([X | Xs], Ys) :-
     reverse(Xs, Zs),
-    append(Zs, [X], Ys).
+    my_append(Zs, [X], Ys).
 
-% Prueba
-% esCuadradoFantasticoSecreto([[s(s(0)),s(s(s(s(0)))),s(s(s(s(s(s(0))))))],[s(s(s(s(0)))),s(s(s(s(s(s(0)))))),s(s(0))],[s(s(s(s(s(s(0)))))),s(s(0)),s(s(s(s(0))))]],s(s(s(s(s(s(0))))))).
+my_append([], Y, Y).
+my_append([H|X], Y, [H|Z]) :-
+    my_append(X, Y, Z).
+
+% Ejemplos
+% esCuadradoFantasticoSecreto([[s(s(0)), s(s(s(s(0)))), s(s(s(s(s(s(0))))))], [s(s(s(s(0)))), s(s(s(s(s(s(0)))))), s(s(0))], [s(s(s(s(s(s(0)))))), s(s(0)), s(s(s(s(0))))]], X).
+% esCuadradoFantasticoSecreto([[s(s(s(s(0)))), s(s(0)), s(s(s(s(s(s(0)))))), s(s(s(s(s(s(s(s(0))))))))], [s(s(s(s(s(s(0)))))), s(s(s(s(0)))), s(s(s(s(s(s(s(s(0)))))))), s(s(0))], [s(s(0)), s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(0)))), s(s(s(s(s(s(0))))))], [s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(s(s(0)))))), s(s(0)), s(s(s(s(0))))]], X).
+% esCuadradoFantasticoSecreto([[s(s(s(s(0)))), s(s(0)), s(s(s(s(s(s(0)))))), s(s(s(s(s(s(s(s(0))))))))], [s(s(s(s(s(s(0)))))), s(s(s(s(0)))), s(s(s(s(s(s(s(s(0)))))))), s(s(0))], [s(s(0)), s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(0)))), s(s(s(s(s(s(0))))))], [s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(s(s(0)))))), s(s(0)), s(s(s(s(0))))]], s(s(s(s(s(s(s(s(0))))))))).
+% esCuadradoFantasticoSecreto([[s(s(0)), s(s(0)), s(s(0))], [s(s(0)), s(s(0)), s(s(0))], [s(s(0)), s(s(0)), s(s(0))]], X).
