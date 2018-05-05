@@ -3,6 +3,10 @@
 
 :-module(_,_).
 
+alumno_prode(lopez, merlin, jaime, t110296).
+alumno_prode(copado, redondo, sergio, t110040).
+alumno_prode(calle, ruiz, javier, v130126).
+
 esCuadradoFantasticoSecreto(Box, SecretNumber) :-
     parseBox(Box, SecretNumber).
 
@@ -62,7 +66,7 @@ my_append([H|X], Y, [H|Z]) :-
     my_append(X, Y, Z).
 
 % Ejemplos
-% esCuadradoFantasticoSecreto([[s(s(0)), s(s(s(s(0)))), s(s(s(s(s(s(0))))))], [s(s(s(s(0)))), s(s(s(s(s(s(0)))))), s(s(0))], [s(s(s(s(s(s(0)))))), s(s(0)), s(s(s(s(0))))]], X).
-% esCuadradoFantasticoSecreto([[s(s(s(s(0)))), s(s(0)), s(s(s(s(s(s(0)))))), s(s(s(s(s(s(s(s(0))))))))], [s(s(s(s(s(s(0)))))), s(s(s(s(0)))), s(s(s(s(s(s(s(s(0)))))))), s(s(0))], [s(s(0)), s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(0)))), s(s(s(s(s(s(0))))))], [s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(s(s(0)))))), s(s(0)), s(s(s(s(0))))]], X).
-% esCuadradoFantasticoSecreto([[s(s(s(s(0)))), s(s(0)), s(s(s(s(s(s(0)))))), s(s(s(s(s(s(s(s(0))))))))], [s(s(s(s(s(s(0)))))), s(s(s(s(0)))), s(s(s(s(s(s(s(s(0)))))))), s(s(0))], [s(s(0)), s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(0)))), s(s(s(s(s(s(0))))))], [s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(s(s(0)))))), s(s(0)), s(s(s(s(0))))]], s(s(s(s(s(s(s(s(0))))))))).
-% esCuadradoFantasticoSecreto([[s(s(0)), s(s(0)), s(s(0))], [s(s(0)), s(s(0)), s(s(0))], [s(s(0)), s(s(0)), s(s(0))]], X).
+% esCuadradoFantasticoSecreto([[s(s(0)), s(s(s(s(0)))), s(s(s(s(s(s(0))))))], [s(s(s(s(0)))), s(s(s(s(s(s(0)))))), s(s(0))], [s(s(s(s(s(s(0)))))), s(s(0)), s(s(s(s(0))))]], X). --> X = s(s(s(s(s(s(0)))))) ? yes
+% esCuadradoFantasticoSecreto([[s(s(s(s(0)))), s(s(0)), s(s(s(s(s(s(0)))))), s(s(s(s(s(s(s(s(0))))))))], [s(s(s(s(s(s(0)))))), s(s(s(s(0)))), s(s(s(s(s(s(s(s(0)))))))), s(s(0))], [s(s(0)), s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(0)))), s(s(s(s(s(s(0))))))], [s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(s(s(0)))))), s(s(0)), s(s(s(s(0))))]], X). --> X = s(s(s(s(s(s(s(s(0)))))))) ? yes
+% esCuadradoFantasticoSecreto([[s(s(s(s(0)))), s(s(0)), s(s(s(s(s(s(0)))))), s(s(s(s(s(s(s(s(0))))))))], [s(s(s(s(s(s(0)))))), s(s(s(s(0)))), s(s(s(s(s(s(s(s(0)))))))), s(s(0))], [s(s(0)), s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(0)))), s(s(s(s(s(s(0))))))], [s(s(s(s(s(s(s(s(0)))))))), s(s(s(s(s(s(0)))))), s(s(0)), s(s(s(s(0))))]], s(s(s(s(s(s(s(s(0))))))))). --> yes
+% esCuadradoFantasticoSecreto([[s(s(0)), s(s(0)), s(s(0))], [s(s(0)), s(s(0)), s(s(0))], [s(s(0)), s(s(0)), s(s(0))]], X). --> no
